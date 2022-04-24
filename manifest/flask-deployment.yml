@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+spec:
+  selector:
+    matchLabels:
+      app: flask-app
+  template:
+    metadata:
+      labels:
+        app: flask-app
+    spec:
+      containers:
+      - name: flask-app
+        image: dab8106/flaskapp24042022:latest
+        env:
+        - name: FLASK_APP
+          valueFrom:
+            configMapKeyRef:
+              name: flask-app-cm
+              key: flask_app
+        ports:
+        - containerPort: 80
